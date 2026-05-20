@@ -1,5 +1,5 @@
-import { clientConfig, type ClientConfig } from "@/client-config";
+import { clientConfig, type DentistConfig } from "@/client-config";
 
-export function useClientConfig(): ClientConfig {
+export function useClientConfig(): DentistConfig {
   return clientConfig;
 }

@@ -1,166 +1,143 @@
-import heroOffice from "@/assets/hero-office.jpg";
-import attorneyHeadshot from "@/assets/attorney-headshot.jpg";
-
-export interface PracticeArea {
-  name: string;
-  description: string;
-  icon: string;
-}
-
-export interface Testimonial {
-  quote: string;
-  attribution: string;
-}
-
-export interface Attorney {
-  name: string;
-  title: string;
-  photo: string;
-  bio: string;
-  barAdmissions: string[];
-  yearsExperience: number;
-  casesHandled?: number;
-  education: string[];
-  linkedin?: string;
-}
-
-export interface ClientConfig {
+export interface DentistConfig {
   businessName: string;
   tagline: string;
   heroImage: string;
-  heroLayout: "split" | "fullbleed";
-  logo: string;
-  attorneys: Attorney[];
-  practiceAreas: PracticeArea[];
-  testimonials: Testimonial[];
-  hours: {
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    sunday: string;
-  };
-  responsePromise: string;
-  freeConsultation: boolean;
+  logo?: string;
   phone: string;
   email: string;
   address: string;
-  lat: number;
-  lng: number;
-  linkedin?: string;
-  facebook: string;
+  lat?: number;
+  lng?: number;
+  instagram?: string;
+  facebook?: string;
   primaryColor: string;
   accentColor: string;
-  domain: string;
-  vertical: "attorney";
-  disclaimer: string;
+  domain?: string;
+  placeId?: string;
+  yearsInPractice: number;
+  patientsServed: number;
+  googleRating: number;
+  googleReviewCount: number;
+  newPatientOffer: string;
+  insuranceAccepted: string[];
+  services: Array<{ name: string; description: string; icon: string }>;
+  hours: Record<string, string>;
+  team: Array<{ name: string; title: string; photo?: string; bio: string }>;
+  testimonials: Array<{ quote: string; author: string; rating: number }>;
+  emergencyLine?: string;
+  newPatientsWelcome: boolean;
 }
 
-export const clientConfig: ClientConfig = {
-  businessName: "Whitfield Law, P.A.",
-  tagline: "Experienced. Accessible. On your side.",
-  heroImage: heroOffice,
-  heroLayout: "fullbleed",
-  logo: "",
-  attorneys: [
+export const clientConfig: DentistConfig = {
+  businessName: "Coastal Family Dentistry",
+  tagline: "Gentle care for the whole family — right here in Jacksonville.",
+  heroImage:
+    "https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=1600&q=85",
+  phone: "(904) 555-0197",
+  email: "hello@coastalfamilydentistry.com",
+  address: "3421 Hendricks Ave, Jacksonville, FL 32207",
+  lat: 30.2918,
+  lng: -81.6354,
+  primaryColor: "#1B4D5C",
+  accentColor: "#C9963A",
+  domain: "coastalfamilydentistry.com",
+  yearsInPractice: 18,
+  patientsServed: 4200,
+  googleRating: 4.9,
+  googleReviewCount: 312,
+  newPatientOffer: "$99 New Patient Special — Exam, X-Rays & Cleaning",
+  insuranceAccepted: [
+    "Delta Dental",
+    "Cigna",
+    "Aetna",
+    "BlueCross BlueShield",
+    "Humana",
+    "Guardian",
+    "MetLife",
+    "United Concordia",
+  ],
+  services: [
     {
-      name: "Marcus Whitfield",
-      title: "Founding Attorney",
-      photo: attorneyHeadshot,
-      bio:
-        "Marcus has practiced law in Jacksonville for more than fifteen years, advising individuals and families through difficult moments. He prides himself on being reachable, plainspoken, and thorough. Outside the office, he serves on the board of a local legal aid clinic.",
-      barAdmissions: [
-        "Florida State Bar, 2009",
-        "U.S. District Court, Middle District of Florida",
-      ],
-      yearsExperience: 15,
-      casesHandled: 500,
-      education: [
-        "J.D., University of Florida Levin College of Law, 2008",
-        "B.A., Florida State University, 2005",
-      ],
-      linkedin: "https://www.linkedin.com/",
+      name: "General Dentistry",
+      description:
+        "Routine cleanings, fillings, and preventive care for the whole family.",
+      icon: "tooth",
+    },
+    {
+      name: "Cosmetic Dentistry",
+      description:
+        "Teeth whitening, veneers, and smile makeovers tailored to you.",
+      icon: "sparkles",
+    },
+    {
+      name: "Emergency Care",
+      description:
+        "Same-day appointments for toothaches, broken teeth, and dental emergencies.",
+      icon: "zap",
+    },
+    {
+      name: "Invisalign",
+      description:
+        "Straighter teeth without braces — discreet, comfortable, effective.",
+      icon: "align-center",
+    },
+    {
+      name: "Dental Implants",
+      description:
+        "Permanent tooth replacement that looks and feels completely natural.",
+      icon: "anchor",
+    },
+    {
+      name: "Pediatric Care",
+      description:
+        "Kid-friendly visits that make dental health a lifelong habit.",
+      icon: "heart",
     },
   ],
-  practiceAreas: [
+  hours: {
+    Monday: "8am–5pm",
+    Tuesday: "8am–5pm",
+    Wednesday: "8am–5pm",
+    Thursday: "8am–5pm",
+    Friday: "8am–3pm",
+    Saturday: "By appointment",
+    Sunday: "Closed",
+  },
+  team: [
     {
-      name: "Personal Injury",
-      description:
-        "If you've been hurt due to someone else's negligence, we help you understand your options and pursue fair compensation through insurance claims or litigation.",
-      icon: "Shield",
+      name: "Dr. Sarah Mendez, DDS",
+      title: "Lead Dentist & Founder",
+      bio: "18 years in Jacksonville. Graduate of UF College of Dentistry. Specializes in cosmetic and family dentistry.",
+      photo:
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80",
     },
     {
-      name: "Family Law",
-      description:
-        "Divorce, custody, and support matters require both legal skill and a steady presence. We guide families through transitions with care and clarity.",
-      icon: "Home",
-    },
-    {
-      name: "Estate Planning",
-      description:
-        "Wills, trusts, and powers of attorney that match your wishes and protect the people you love. We make the process straightforward and unhurried.",
-      icon: "Scroll",
-    },
-    {
-      name: "Business Law",
-      description:
-        "Formation, contracts, and disputes for Jacksonville-area small businesses. Practical counsel from someone who understands what owners actually face.",
-      icon: "Briefcase",
-    },
-    {
-      name: "Real Estate",
-      description:
-        "Residential and commercial transactions, title issues, and landlord-tenant matters across Northeast Florida.",
-      icon: "Building2",
-    },
-    {
-      name: "Civil Litigation",
-      description:
-        "When negotiation fails, we represent clients in state and federal court with thorough preparation and clear communication at every step.",
-      icon: "Scale",
+      name: "Dr. James Park, DMD",
+      title: "Associate Dentist",
+      bio: "Expertise in oral surgery and implants. Patients love his calm, gentle approach.",
+      photo:
+        "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80",
     },
   ],
   testimonials: [
     {
       quote:
-        "Marcus took the time to explain everything in plain language. I never felt like a number — he answered every call and email himself.",
-      attribution: "— Former Client, 2024",
+        "I used to be terrified of the dentist. Now I actually look forward to my appointments.",
+      author: "Maria T.",
+      rating: 5,
+    },
+    {
+      quote: "The team here genuinely cares. My kids ask when they get to go back.",
+      author: "David R.",
+      rating: 5,
     },
     {
       quote:
-        "Professional, patient, and prepared. The whole team treated my case with the seriousness it deserved.",
-      attribution: "— Former Client, 2023",
-    },
-    {
-      quote:
-        "I came in stressed and left with a plan. That alone was worth the call.",
-      attribution: "— Former Client, 2024",
+        "Got a same-day appointment for a broken tooth. In and out in 90 minutes, no pain.",
+      author: "Jennifer K.",
+      rating: 5,
     },
   ],
-  hours: {
-    monday: "8:30 AM – 5:30 PM",
-    tuesday: "8:30 AM – 5:30 PM",
-    wednesday: "8:30 AM – 5:30 PM",
-    thursday: "8:30 AM – 5:30 PM",
-    friday: "8:30 AM – 4:00 PM",
-    saturday: "By appointment",
-    sunday: "Closed",
-  },
-  responsePromise: "We respond to all inquiries within 2 business hours.",
-  freeConsultation: true,
-  phone: "(904) 555-0148",
-  email: "intake@whitfieldlaw.example",
-  address: "200 W Forsyth St, Suite 800, Jacksonville, FL 32202",
-  lat: 30.3271,
-  lng: -81.6589,
-  linkedin: "https://www.linkedin.com/",
-  facebook: "https://www.facebook.com/",
-  primaryColor: "#0f2942",
-  accentColor: "#b08442",
-  domain: "whitfieldlaw.example",
-  vertical: "attorney",
-  disclaimer:
-    "The information on this site is for general purposes only and does not constitute legal advice. No attorney-client relationship is formed by contacting this firm.",
+  emergencyLine: "(904) 555-0198",
+  newPatientsWelcome: true,
 };
