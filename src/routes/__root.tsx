@@ -1,4 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+
 import {
   Outlet,
   Link,
@@ -67,6 +69,41 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+
+type ProspectMeta = { name?: string; rating?: number; reviews?: number; facebook?: string };
+function ProspectBadge() {
+  const [meta, setMeta] = useState<ProspectMeta | null>(null);
+  useEffect(() => {
+    const pd = new URLSearchParams(window.location.search).get("pd");
+    if (!pd) return;
+    try {
+      const r = JSON.parse(decodeURIComponent(escape(atob(pd)))) as ProspectMeta;
+      if (r.rating && r.rating > 0) setMeta(r);
+    } catch {}
+  }, []);
+  if (!meta) return null;
+  const stars = Math.round(meta.rating ?? 0);
+  return (
+    <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 9999, fontFamily: "sans-serif" }}>
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "10px 14px", boxShadow: "0 4px 20px rgba(0,0,0,0.15)", minWidth: 180 }}>
+        <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 4, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>Live Google Reviews</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ color: "#f59e0b", fontSize: 16 }}>{"★".repeat(stars)}{"☆".repeat(5 - stars)}</span>
+          <span style={{ fontWeight: 700, fontSize: 15 }}>{meta.rating?.toFixed(1)}</span>
+          <span style={{ color: "#9ca3af", fontSize: 12 }}>({(meta.reviews ?? 0).toLocaleString()})</span>
+        </div>
+        {meta.facebook && (
+          <a href={meta.facebook.startsWith("http") ? meta.facebook : `https://facebook.com/${meta.facebook}`}
+            target="_blank" rel="noreferrer"
+            style={{ display: "block", marginTop: 8, fontSize: 12, color: "#1877f2", fontWeight: 600, textDecoration: "none" }}>
+            📘 See Facebook reviews →
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -112,6 +149,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ProspectBadge />
     </QueryClientProvider>
   );
 }
